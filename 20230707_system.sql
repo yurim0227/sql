@@ -21,6 +21,7 @@ create user scott identified by tiger;
 grant connect, resource to c##scott, kh;
 grant connect, resource to kh;
 revoke connect, resource from kh;
+grant connect, resource to scott, kh;
 -- 21g xe 버젼 , dba 추가
 grant connect, resource, dba to scott, kh;
 
