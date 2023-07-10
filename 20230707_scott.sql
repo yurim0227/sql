@@ -285,4 +285,30 @@ select * from emp
 -- EMPLOYEE테이블에서 부서코드와 보너스 받는 사원 수 조회하고 부서코드 순으로 정렬
 -- EMPLOYEE테이블에서 성별과 성별 별 급여 평균(정수처리), 급여 합계, 인원 수 조회하고 인원수로 내림차순 정렬
 
+--- 사원명, 부서번호, 부서명, 부서위치를 조회
+select * from dept;
+select * from emp;
+select * 
+    from emp
+        join dept on emp.deptno = dept.deptno
+;
+select emp.ename, emp.deptno, dept.dname, dept.loc
+    from emp
+        join dept on emp.deptno = dept.deptno
+;
+--ORA-00918: 열의 정의가 애매합니다
+--00918. 00000 -  "column ambiguously defined"
+select ename, dept.deptno, dname, loc
+    from emp
+        join dept on emp.deptno = dept.deptno
+;
+select *
+    from emp
+        join dept using (deptno)
+;
+select ename, deptno, dname, loc
+    from emp
+        join dept using (deptno)
+;
+
 
