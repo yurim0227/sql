@@ -26,3 +26,13 @@ grant connect, resource to scott, kh;
 -- 21g xe 버젼 , dba 추가
 grant connect, resource, dba to scott, kh;
 grant connect, resource, dba to pyr98;
+
+--create table emp
+--create user scott
+
+
+
+
+
+
+
