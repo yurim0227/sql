@@ -247,6 +247,10 @@ from  EMPLOYEE e , DEPARTMENT d
 --;
 
 
-
+-- 20230712
+-- 02 - 16. EMPLOYEE테이블에서 사원명, 주민번호 조회 (단, 주민번호는 생년월일만 보이게 하고, '-'다음 값은 '*'로 바꾸기)
+select emp_id, emp_no, substr(emp_no, 1, 7), rPAD(substr(emp_no, 1, 7), 14, '*')
+    from employee
+;
 
 
