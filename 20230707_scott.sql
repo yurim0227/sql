@@ -489,4 +489,19 @@ select * from emp e join dept d on e.deptno=d.deptno;
 select * from salgrade;
 select * from dept;
 
--- from 절 subquery
+--SALESMAN 들의 급여와 같은 급여를 받는 사원을 조회
+select empno, ename, sal
+    from emp
+    where sal < all (select sal from emp where job='SALESMAN')
+--    where sal < (select max(sal) from emp where job='SALESMAN')
+;
+select ename,sal from emp where job='SALESMAN' ;
+
+--관리자로 등록되어 있는 사원들을 조회
+select empno, ename
+    from emp e
+    where exists ( select empno from emp e2 where e2.empno = e.mgr)
+;
+select * from emp;
+
+select * from user_constraints;
