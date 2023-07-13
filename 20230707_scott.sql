@@ -436,54 +436,10 @@ where rnum between 7 and 9
 --20230712
 -- 03- 11. GRADE별로 평균급여에 10프로내외의 급여를 받는 사원명을 조회 - 정렬
 -- where 에 subquery 활용
-select s.grade, e.ename , e.sal
-    from emp e join salgrade s  on e.sal between s.losal and s.hisal
-    where e.sal > 
-    -- 다중 행 결과물과 >= 비교 안됨.(950, 1266, 1550, 2879, 5000 )
-            (
-            select avg(sal)
-                from emp e2 join salgrade s2
-                    on e2.sal between s2.losal and s2.hisal
-                where s2.grade = s.grade
-                --group by s2.grade having s2.grade = 4
-            )*0.9
-            and e.sal <
-            (
-            select avg(sal)
-                from emp e2 join salgrade s2
-                    on e2.sal between s2.losal and s2.hisal
-                where s2.grade =  s.grade
-                --group by s2.grade having s2.grade = 4
-            )*1.1
-;
-select avg(sal) , s.grade
-    from emp e join salgrade s
-        on e.sal between s.losal and s.hisal
-    group by s.grade
-;
+
 -- select에서 rownum 반드시 별칭
 -- select에서 함수사용한 경우 반드시 별칭
 -- with 사용
-with abc3 as ( select s.grade, e.ename , e.sal
-    from emp e join salgrade s
-        on e.sal between s.losal and s.hisal )
-select *
-    from abc3 t1
-    where sal between (select avg(t2.sal) from abc3 t2 where t2.grade = t1.grade)*0.9 
-    and (select avg(t2.sal) from abc3 t2 where t2.grade = t1.grade)*1.1
-;
-select t1.grade, ename "10프로내외"
-    from view_emp_salgrade t1
-    where sal between (select avg(t2.sal) from view_emp_salgrade t2 where t2.grade = t1.grade)*0.9 
-    and (select avg(t2.sal) from view_emp_salgrade t2 where t2.grade = t1.grade)*1.1
-    order by t1.grade asc, 2 asc
-;
-Create or replace view view_emp_salgrade 
-as
-select e.empno, e.ename, job, mgr, hiredate, sal, comm, deptno, grade, losal, hisal
-    from emp e join salgrade s
-        on e.sal between s.losal and s.hisal
-;
 
 --  from 절 subquery
 select grade, ename "10프로내외"
@@ -673,3 +629,66 @@ where deptno=20
 desc emp;
 desc emp_copy20;
 select * from user_constraints;
+
+desc emp;
+--insert into emp (컬럼명1, 컬럼명2,...) values (값1, 값2,...);
+insert into emp (ename, empno, job, mgr, hiredate, deptno) 
+    values ('EJK', 8003, 'T', 7788, sysdate, 40);
+select * from emp;
+insert into emp (ename, empno, job, mgr, hiredate, deptno) 
+    values ('EJK2', 8004, 'P', null, to_date('2023-07-12', 'yyyy-mm-dd'), 40);
+commit;
+update emp
+    set mgr=7788
+    where ename='EJK2'
+    -- update 명령문의 where절에는 컬럼명PK=값
+    -- where절에는 컬럼명PK=값  ==> resultset 은 단일행
+    -- where절에는 컬럼명UK=값  ==> resultset 은 단일행
+;
+-- 20번 부서의 mgr가 SMITH 7908 로 조직개편
+update emp
+    set mgr=7908
+    where deptno=20
+;   -- 결과 5
+update emp
+    set mgr=7908
+    where deptno=70
+;   -- 결과 0
+
+rollback;
+
+select * from emp;
+-- 30번 부서의 mgr가 SMITH 7908 로 조직개편
+update emp
+    set mgr=7908
+    where deptno=30
+;
+select * from emp;
+update emp
+    set mgr=7902
+    where ename='EJK2'
+;
+select * from emp;
+-- 여러 DML 명령어 들을 묶어서 하나의 행동(일)처리를 하고자 할때 commit / rollback 을 적절히 사용.
+-- 1 DML 명령어가 하나의 행동(일) 처리 단위라면 DML - commit;
+-- 2 이상 DML 명령어가 하나의 행동(일) 처리 단위라면 DML 모두가 성공해야 - commit; 그중 일부가 실패했다면 - rollback
+-- 하나의 행동(일) 처리단위를 Transaction 트랜잭션 - commit/rollback 명령어가 수행되는 단위
+-- commit;
+-- rollback;
+
+commit;
+select * from emp;
+select * from dept;
+-- 새로운 부서 50번이 만들어지고 그 부서에 신입사원 EJ3 (8005), EJ4(5006) 을 투입함.
+insert into emp (ename, empno, deptno) values ('EJ3', 8005, 20);
+insert into emp (ename, empno, deptno) values ('EJ4', 8006, 20);
+insert all
+    into emp (ename, empno, deptno) values ('EJ3', 8005, 20)
+    into emp (ename, empno, deptno) values ('EJ4', 8006, 20)
+select * from dual
+;
+insert all
+    into emp (ename, empno, deptno) values ('EJ3', maxempno+1, 20)
+    into emp (ename, empno, deptno) values ('EJ4', maxempno+2, 20)
+select max(empno) maxempno from emp
+;
