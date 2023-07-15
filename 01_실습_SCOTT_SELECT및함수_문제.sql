@@ -12,11 +12,15 @@ select * from emp where sal = sal order by sal desc, comm desc;
 select empno, ename, job, hiredate from emp order by hiredate;
 -- 7. EMP테이블에서 사원번호, 사원명 조회 (사원번호 기준 내림차순 정렬)
 select empno, ename from emp order by empno desc;
--- 8. EMP테이블에서 사번, 입사일, 사원명, 급여 조회(부서번호가 빠른 순으로, 같은 부서번호일 때는 최근 입사일 순으로 처리)
-select empno, deptno, hiredate, ename, sal from emp where deptno = deptno order by deptno, hiredate desc;
+-- 8. EMP테이블에서 사번, 입사일, 사원명, 급여 조회
+-- (부서번호가 빠른 순으로, 같은 부서번호일 때는 최근 입사일 순으로 처리)
+select empno, deptno, hiredate, ename, sal
+    from emp where deptno = deptno order by deptno, hiredate desc
+;
 -- 9. 오늘 날짜에 대한 정보 조회
 select sysdate from dual;
--- 10. EMP테이블에서 사번, 사원명, 급여 조회(단, 급여는 100단위까지의 값만 출력 처리하고 급여 기준 내림차순 정렬)
+-- 10. EMP테이블에서 사번, 사원명, 급여 조회
+-- (단, 급여는 100단위까지의 값만 출력 처리하고 급여 기준 내림차순 정렬)
 select empno, ename, round(sal, -2) from emp order by sal desc;
 -- 11. EMP테이블에서 사원번호가 홀수인 사원들을 조회
 select * from emp where mod(empno, 2) = 1;
