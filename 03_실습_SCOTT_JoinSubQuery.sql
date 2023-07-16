@@ -15,7 +15,7 @@ select emp.*, grade
     -- 2. 연봉 계산은 SAL*12+COMM
     -- 3. 순서는 평균연봉이 내림차순으로 정렬한다.
 select grade, round(avg(sal * 12 + nvl(comm, 0)), 1) 평균연봉
-    from emp join salgrade on sal > losal and sal < hisal
+    from emp join salgrade on sal >= losal and sal <= hisal
     where deptno != 10
     group by grade
     order by 평균연봉 desc
