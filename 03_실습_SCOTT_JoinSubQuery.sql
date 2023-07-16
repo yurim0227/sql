@@ -110,5 +110,6 @@ end SAL_SUBSIDY
     case when loc = 'NEW YORK' then sal * 0.02
     when loc = 'DALLAS' then sal * 0.05
     when loc = 'CHICAGO' then sal * 0.03
-    when loc = 'BOSTON' then sal * 0.07 end desc
+    when loc = 'BOSTON' then sal * 0.07
+    end desc
 ;
