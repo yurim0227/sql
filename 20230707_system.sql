@@ -30,9 +30,16 @@ grant connect, resource, dba to pyr98;
 --create table emp
 --create user scott
 
+--2023-07-14
+select * from all_users;
+select * from dba_users;
+select * from user_users;
+--상태: 실패 -테스트 실패: ORA-28000: 계정이 잠겼습니다.
+alter user kh account unlock;
 
-
-
-
-
-
+--select * from KH.DEPT;
+-- 안됨. create public synonym dept_public for KH.DEPT;
+create public synonym DEPT2_PUBLIC for KH.DEPARTMENT;
+select * from DEPT2_PUBLIC;
+alter session set "_ORACLE_SCRIPT"=true;
+drop user kh cascade;
