@@ -37,6 +37,13 @@
 
 -- 14. 춘 대학교에 다니는 동명이인(同名異人) 학생들의 이름을 찾고자 한다.
 -- 어떤 SQL 문장을 사용하면 가능하겠는가?
+select * from tb_student;
+select student_name 동일이름, count(*) "동명인 수"
+    from tb_student
+    group by student_name
+    having count(*) > 1
+    order by student_name
+;
 
 -- 15. 학번이 A112113 인 김고운 학생의 년도, 학기 별 평점과 년도 별 누적 평점, 총 평점을 구하는
 -- SQL 문을 작성하시오. (단, 평점은 소수점 1자리까지만 반올림하여 표시한다.)
