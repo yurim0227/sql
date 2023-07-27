@@ -7,8 +7,6 @@ create user c##scott identified by tiger;
 drop user c##scott;
 -- 21g xe 버젼 , "_ORACLE_SCRIPT"=true; 셋 해줘야함.
 alter session set "_ORACLE_SCRIPT"=true;
-create user kh identified by kh;
-create user scott identified by tiger;
 create user pyr98 identified by pyr98;
 create user jjapkorea identified by jjapkorea;
 -- semi 수업실습 계정
@@ -17,6 +15,13 @@ grant connect, resource, dba to khl;
 -- finale 수업실습 계정
 create user khlfinal identified by khlfinal;
 grant connect, resource, dba to khlfinal;
+
+
+
+create user test identified by test;
+
+create user kh identified by kh;
+create user scott identified by tiger;
 
 --상태: 실패 -테스트 실패: ORA-01017: 사용자명/비밀번호가 부적합, 로그온할 수 없습니다.
 --상태: 실패 -테스트 실패: ORA-01045: 사용자 SCOTT는 CREATE SESSION 권한을 가지고있지 않음; 로그온이 거절되었습니다
