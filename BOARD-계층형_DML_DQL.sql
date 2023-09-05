@@ -54,3 +54,5 @@ desc board;
 select BNO, BTITLE, to_char(BWRITE_DATE, 'yyyy-mm-dd hh24:mi:ss') BWRITE_DATE, MID, BREF, BRE_LEVEL, BRE_STEP
     from board order by bref desc, bre_step asc;
 commit;
+alter table member add enabled number(1) default 1;
+alter table member add authority char(3) default 'R_A';
