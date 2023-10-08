@@ -15,6 +15,8 @@ grant connect, resource, dba to khl;
 -- finale 수업실습 계정
 create user khlfinal identified by khlfinal;
 grant connect, resource, dba to khlfinal;
+create user ncsUser identified by ncsUser;
+grant connect, resource, dba to ncsUser;
 
 
 
